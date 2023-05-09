@@ -33,7 +33,7 @@ class _ValidatorState extends State<Validator> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        key: Constants.scaffoldKey,
+        key: Constants.scaffoldKey.currentState==null?Constants.scaffoldKey:null,
         body: const Center(child: Text("Validating URL..."),));
   }
 }
