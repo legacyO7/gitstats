@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gitstats/ui/home/home_widgets/home_input/home_input_bloc.dart';
 import 'package:gitstats/ui/stat_screen/stats_bloc.dart';
 import 'package:gitstats/utils/routes/routes_cubit.dart';
 import 'package:gitstats/utils/routes/routes_state.dart';
@@ -22,6 +23,7 @@ class GitStats extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => StatsBloc()),
+        BlocProvider(create: (_) => HomeInputBloc()),
         BlocProvider(create: (_)=>RouteCubit())
       ],
       child: BlocBuilder<RouteCubit,RouteStates>(

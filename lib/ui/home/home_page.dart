@@ -4,7 +4,7 @@ import 'package:gitstats/ui/home/home_bloc.dart';
 import 'package:gitstats/ui/home/home_state.dart';
 import 'package:gitstats/ui/home/home_widgets/home_repo_list.dart';
 
-import 'home_widgets/home_input.dart';
+import 'home_widgets/home_input/home_input_page.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
