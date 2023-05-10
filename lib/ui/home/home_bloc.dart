@@ -20,7 +20,7 @@ class HomeBloc extends Bloc<HomeEvent,HomeState> {
      value.fold((l) {
       emit(HomeStateInit());
      }, (r){
-       emit(HomeStateRepoList(r));
+       emit(HomeStateRepoList(r,author));
      });
    });
   }

@@ -8,5 +8,6 @@ class HomeStateisLoading extends HomeState{}
 
 class HomeStateRepoList extends HomeState{
   RepositoryListModel repoListModel;
-  HomeStateRepoList(this.repoListModel);
+  String author;
+  HomeStateRepoList(this.repoListModel,this.author);
 }

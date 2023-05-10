@@ -1,25 +1,32 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gitstats/ui/home/home_bloc.dart';
-import 'package:gitstats/ui/home/home_event.dart';
 import 'package:gitstats/ui/home/models/repository_list_model.dart';
+import 'package:gitstats/utils/common_widgets.dart';
 import 'package:gitstats/utils/routes/routes_cubit.dart';
 
 class HomeRepoList extends StatelessWidget {
   final RepositoryListModel repoListModel;
+  final String authorName;
 
-  const HomeRepoList({Key? key, required this.repoListModel}) : super(key: key);
+  const HomeRepoList({
+    Key? key,
+    required this.repoListModel,
+    required this.authorName
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return listCard(context, repoDetailsModel: repoListModel.repoDetailsList![index]);
-        },
-        separatorBuilder: (_, __) => const Divider(),
-        itemCount: repoListModel.repoDetailsList!.length);
+    return Scaffold(
+      appBar: appBar(context, title: authorName),
+      body: ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return listCard(context, repoDetailsModel: repoListModel.repoDetailsList![index]);
+          },
+          separatorBuilder: (_, __) => const Divider(),
+          itemCount: repoListModel.repoDetailsList!.length),
+    );
   }
 
 
@@ -27,7 +34,6 @@ class HomeRepoList extends StatelessWidget {
     return InkWell(
       onTap: (){
         if(repoDetailsModel.fullName?.isNotEmpty??false) {
-          context.read<HomeBloc>().add(HomeEventRestore());
           context.read<RouteCubit>().addRouteAndPush(routeName: repoDetailsModel.fullName!, context: context);
         }
       },

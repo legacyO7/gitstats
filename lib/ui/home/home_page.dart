@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage>{
         }
 
         if(state is HomeStateRepoList){
-          return HomeRepoList(repoListModel: state.repoListModel);
+          return HomeRepoList(repoListModel: state.repoListModel,authorName: state.author,);
         }
 
         if(state is HomeStateisLoading){

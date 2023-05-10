@@ -35,13 +35,7 @@ class _StatsListWidgetState extends State<StatsListWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(widget.title),
-          centerTitle: true,
-          leading: IconButton(icon: const Icon(Icons.home_filled),onPressed: (){
-        Navigator.pushReplacementNamed(context, '/');
-      },
-      )),
+      appBar: appBar(context, title: widget.title,refresh: false),
       body: BlocBuilder<StatsBloc, StatsState>(builder: (context, state){
         if(state is StatsStateList){
           if(state.statList.repositoryStatList?.isEmpty??true){
@@ -53,7 +47,7 @@ class _StatsListWidgetState extends State<StatsListWidget> {
               return listCard(
                   state.statList.repositoryStatList![index].id==state.statList.repositoryStatList?.first.id,
                   repositoryStatModel: state.statList.repositoryStatList![index]);
-            },
+              },
               itemCount: state.statList.repositoryStatList!.length,
               onLoadMore: ()=>context.read<StatsBloc>().add(StatsEventLoadMore()),
               loadMore: state.loadMore,

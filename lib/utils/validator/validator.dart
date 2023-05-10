@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gitstats/ui/home/home_bloc.dart';
+import 'package:gitstats/ui/home/home_event.dart';
 import 'package:gitstats/utils/constants.dart';
 import 'package:gitstats/utils/routes/routes_cubit.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -23,9 +25,10 @@ class _ValidatorState extends State<Validator> {
   }
   
   validateRoute(){
-      if(widget.route.isNotEmpty) {
+      if(widget.route.isNotEmpty&&widget.route!='/') {
         context.read<RouteCubit>().addRouteAndPush(routeName: widget.route,context: context);
       }else{
+        context.read<HomeBloc>().add(HomeEventRestore());
         Navigator.pushNamed(context, '/');
       }
   }
@@ -41,12 +44,18 @@ class _ValidatorState extends State<Validator> {
       },
       child: Scaffold(
           key: Constants.scaffoldKey.currentState==null?Constants.scaffoldKey:null,
-          body:  Center(child: Column(
-            children: const [
-              Text("Validating URL"),
-              LinearProgressIndicator()
-            ],
-          ),)),
+          body:  Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:  [
+                const Text("Validating URL"),
+                Container(
+                    width: MediaQuery.of(context).size.width/10,
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: const LinearProgressIndicator())
+              ],
+            ),
+          )),
     );
   }
 }

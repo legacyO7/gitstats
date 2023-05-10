@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gitstats/ui/home/home_bloc.dart';
+import 'package:gitstats/ui/home/home_event.dart';
 import 'package:intl/intl.dart';
 
 String formattedDateTime({String? dateTime}){
@@ -20,3 +23,15 @@ Widget listItem({required String text, int flex=1,bool isHeading=false}){
 
 Widget emptyData()=>
     const Center(child: Text("No Data"));
+
+AppBar appBar(BuildContext context,{required String title, bool refresh=true})=>AppBar(
+    title: Text(title),
+    centerTitle: true,
+    leading: IconButton(icon:  Icon(refresh?Icons.home_filled:Icons.arrow_back_ios),onPressed: (){
+      if(ModalRoute.of(context)?.settings.name=='/'&&refresh){
+        context.read<HomeBloc>().add(HomeEventRestore());
+      }else{
+        Navigator.pushReplacementNamed(context, '/');
+      }
+     },
+    ));
