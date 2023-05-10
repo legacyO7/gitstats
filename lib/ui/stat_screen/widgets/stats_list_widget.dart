@@ -8,41 +8,20 @@ import 'package:gitstats/ui/stat_screen/stats_state.dart';
 import 'package:gitstats/ui/stat_screen/widgets/asset_list_widget.dart';
 import 'package:gitstats/utils/common_widgets.dart';
 
-class StatsListWidget extends StatefulWidget {
+class StatsListWidget extends StatelessWidget {
    const StatsListWidget({Key? key,required this.title}) : super(key: key);
    final String title;
 
   @override
-  State<StatsListWidget> createState() => _StatsListWidgetState();
-}
-
-class _StatsListWidgetState extends State<StatsListWidget> {
-
-  late ScrollController _scrollController;
-
-  @override
-  void initState() {
-    _scrollController=ScrollController();
-     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, title: widget.title,refresh: false),
+      appBar: appBar(context, title: title,refresh: false),
       body: BlocBuilder<StatsBloc, StatsState>(builder: (context, state){
         if(state is StatsStateList){
           if(state.statList.repositoryStatList?.isEmpty??true){
             return emptyData();
           }else{
             return  EasyListView(
-              controller: _scrollController,
               itemBuilder: (context,index){
               return listCard(
                   state.statList.repositoryStatList![index].id==state.statList.repositoryStatList?.first.id,
