@@ -15,7 +15,7 @@ class HomeBloc extends Bloc<HomeEvent,HomeState> {
   Future _getRepoList(emit,{required String author}) async{
    emit(HomeStateisLoading());
    await dioHandler.invokeApi<RepositoryListModel>(path:  'users/$author/repos',
-      fromJsonToList: RepositoryListModel.fromJson
+      factory: RepositoryListModel.fromJson
    ).then((value){
      value.fold((l) {
       emit(HomeStateInit());

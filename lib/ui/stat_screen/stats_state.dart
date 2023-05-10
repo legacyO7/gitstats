@@ -8,7 +8,9 @@ class StatsStateOnError extends StatsState{}
 
 class StatsStateList extends StatsState{
   StatListModel statList;
+  bool loadingMore;
+  bool loadMore;
 
-  StatsStateList(this.statList);
+  StatsStateList(this.statList, {this.loadingMore=false,this.loadMore=true});
 }
 

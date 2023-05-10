@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gitstats/ui/stat_screen/models/stat_list_model.dart';
-import 'package:gitstats/ui/stat_screen/widgets/stats_list_widget.dart';
-import 'package:intl/intl.dart';
+import 'package:gitstats/utils/common_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AssetListWidget extends StatelessWidget {
@@ -31,6 +30,7 @@ class AssetListWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
         decoration:  BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           gradient: LinearGradient(
             colors: [
               Colors.grey[600]!,
@@ -51,7 +51,7 @@ class AssetListWidget extends StatelessWidget {
             if(repositoryAssetModel.updatedAt!.isNotEmpty)
             Row(
               children: [
-                listItem(text: "updated at ${DateFormat('hh:mm a dd MMM yyyy').format(DateTime.parse(repositoryAssetModel.updatedAt!))}"),
+                listItem(text: "updated at ${formattedDateTime(dateTime: repositoryAssetModel.updatedAt)}"),
                   repositoryAssetModel.downloads!<1?
                 const Text("No Downloads"):
                 Text.rich(TextSpan(

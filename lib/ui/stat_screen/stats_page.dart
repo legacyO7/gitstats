@@ -14,6 +14,8 @@ class StatsPage extends StatefulWidget {
 
 class _StatsPageState extends State<StatsPage> {
 
+  String repositoryName='';
+
   @override
   void initState() {
     super.initState();
@@ -24,9 +26,10 @@ class _StatsPageState extends State<StatsPage> {
       }
 
       if(route.contains('/')) {
+        repositoryName= route.split('/')[1];
         context.read<StatsBloc>().add(StatsEventFetchStats(
             author: route.split('/')[0],
-            repositoryName: route.split('/')[1]
+            repositoryName: repositoryName
         ));
       }else{
         Navigator.pushReplacementNamed(context, '/');
@@ -37,9 +40,6 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(leading: IconButton(icon: const Icon(Icons.home_filled),onPressed: (){
-          Navigator.pushReplacementNamed(context, '/');
-        },)),
         body: BlocConsumer<StatsBloc, StatsState>(
           listener: (context, state){
             if(state is StatsStateOnError){
@@ -53,7 +53,7 @@ class _StatsPageState extends State<StatsPage> {
           }
 
           if(state is StatsStateList){
-            return StatsListWidget(statList: state.statList);
+            return StatsListWidget(title: repositoryName);
           }
 
           return  Container();
