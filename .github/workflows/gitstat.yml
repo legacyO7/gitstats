@@ -1,0 +1,50 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: DEPLOY GITSTATS
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: "Build WebApp"
+    runs-on: ubuntu-latest
+    
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2.6.1
+        with:
+          channel: 'stable'
+
+      - name: Install Linux build tools
+        run: sudo apt-get update && sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev squashfs-tools libfuse2
+
+      - name: Enable web
+        run: flutter config --enable-web
+        
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Build WebApp
+        run: flutter build web
+        
+      - name: Pushes to another repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@create-branch-if-needed-arg
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: build/web
+          destination-github-username: 'legacyO7'
+          destination-repository-name: 'legacyO7.github.io'
+          user-email: 46623012+legacyO7@users.noreply.github.com
+          commit-message: "update webapp"
+          target-branch: master
