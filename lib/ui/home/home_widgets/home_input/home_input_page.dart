@@ -75,7 +75,7 @@ class _HomeInputState extends State<HomeInput> {
                     !state.isAuthorFieldEmpty!?
                   TextButton(onPressed: (){
                     if(authorName.text.isNotEmpty) {
-                      context.read<HomeBloc>().add(HomeEventGetAuthorName(authorName.text));
+                      context.read<HomeBloc>().add(HomeEventGetAuthorName(authorName.text.trim()));
                     }
                   }, child: const Text("List Repositories")):null,
                 ),
@@ -84,7 +84,7 @@ class _HomeInputState extends State<HomeInput> {
                 if(!state.isRepositoryFieldEmpty!)
                 ElevatedButton(onPressed: (){
                   if(authorName.text.isNotEmpty&&repositoryName.text.isNotEmpty) {
-                    context.read<RouteCubit>().addRouteAndPush(routeName:"${authorName.text}/${repositoryName.text}", context: context);
+                    context.read<RouteCubit>().addRouteAndPush(routeName:"${authorName.text.trim()}/${repositoryName.text.trim()}", context: context);
                   }
                 }, child: const Text("Check Stats")),
               ],
