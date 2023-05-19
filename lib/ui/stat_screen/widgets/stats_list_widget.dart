@@ -1,4 +1,4 @@
-import 'package:easy_listview/easy_listview.dart';
+import 'package:easy_listview_l7/easy_listview_l7.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gitstats/ui/stat_screen/models/stat_list_model.dart';
@@ -51,9 +51,9 @@ class StatsListWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if(isLatest)
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
+            children: [
               Text("Latest release",style: TextStyle(fontWeight: FontWeight.bold),)
             ],
           ),
