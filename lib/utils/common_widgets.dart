@@ -3,12 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gitstats/ui/home/home_bloc.dart';
 import 'package:gitstats/ui/home/home_event.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String formattedDateTime({String? dateTime}){
   if(dateTime==null|| dateTime.isEmpty){
     return '-';
   }
   return DateFormat('hh:mm a dd MMM yyyy').format(DateTime.parse(dateTime));
+}
+
+Future<void> openUrl(url) async {
+  if (!await launchUrl(url is Uri? url: Uri.parse(url) )) {
+    throw Exception('Could not launch $url');
+  }
 }
 
 

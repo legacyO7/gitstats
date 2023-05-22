@@ -46,7 +46,7 @@ class AssetListWidget extends StatelessWidget {
               listItem(text: "${repositoryAssetModel.name}"),
               Text(getSize(bytes: repositoryAssetModel.size!.toDouble())),
               if(repositoryAssetModel.url!.isNotEmpty)
-              IconButton(onPressed: ()=>_launchUrl(repositoryAssetModel.url), icon: const Icon(Icons.download_outlined))
+              IconButton(onPressed: ()=>openUrl(repositoryAssetModel.url), icon: const Icon(Icons.download_outlined))
             ],),
             if(repositoryAssetModel.updatedAt!.isNotEmpty)
             Row(
@@ -89,11 +89,5 @@ class AssetListWidget extends StatelessWidget {
       count++;
     }
     return size;
-  }
-
-  Future<void> _launchUrl(url) async {
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
   }
 }

@@ -75,6 +75,10 @@ class _HomeRepoListState extends State<HomeRepoList> {
                       ),
                     ),
 
+                    const SizedBox(
+                      width: 20,
+                    )
+
                   ],
                 ),
                 Expanded(
@@ -98,36 +102,57 @@ class _HomeRepoListState extends State<HomeRepoList> {
   }
 
   Widget listCard(BuildContext context,{required RepositoryDetailsModel repoDetailsModel}) {
-    return InkWell(
-      onTap: (){
-        if(repoDetailsModel.fullName?.isNotEmpty??false) {
-          context.read<RouteCubit>().addRouteAndPush(routeName: repoDetailsModel.fullName!, context: context);
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Expanded(
-                flex: 2,
-                child: Text(repoDetailsModel.name!)),
-            Expanded(child: Text("${repoDetailsModel.stars!}",textAlign: TextAlign.center,)),
-            Expanded(child: Text( "${repoDetailsModel.watchers!}",textAlign: TextAlign.center,)),
-            Expanded(child: Text("${repoDetailsModel.forks!}",textAlign: TextAlign.center,)),
-          ],
+    return Row(
+      children: [
+        Expanded(
+          child: InkWell(
+            onTap: (){
+              if(repoDetailsModel.fullName?.isNotEmpty??false) {
+                context.read<RouteCubit>().addRouteAndPush(routeName: repoDetailsModel.fullName!, context: context);
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child: Text(repoDetailsModel.name!)),
+                  Expanded(child: Text("${repoDetailsModel.stars!}",textAlign: TextAlign.center,)),
+                  Expanded(child: Text( "${repoDetailsModel.watchers!}",textAlign: TextAlign.center,)),
+                  Expanded(child: Text("${repoDetailsModel.forks!}",textAlign: TextAlign.center,)),
+                ],
+              ),
+            ),
+          ),
         ),
-      ),
+        IconButton(
+          iconSize: 15,
+            onPressed: ()=> openUrl(repoDetailsModel.htmlUrl),
+            icon: const Icon(Icons.open_in_new))
+      ],
     );
   }
 
-  Widget listIconData({required String title, required IconData icon, int flex=1}){
+  Widget listIconData({required String title,int flex=1,required IconData icon}){
+    double getWidth()=> ((MediaQuery.of(context).size.width));
     return Row(
           mainAxisAlignment: flex==1?  MainAxisAlignment.center: MainAxisAlignment.start,
           children: [
-            Icon(icon),
             const SizedBox(width: 5,),
-            Text(title,textAlign: TextAlign.center),
+            SizedBox(
+              width: (getWidth()/90)*title.length,
+              child:
+              getWidth()>500?
+              FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.justify,
+                ),
+              ):Icon(icon),
+            ),
           ],
         );
   }

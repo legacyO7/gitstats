@@ -16,8 +16,9 @@ class RepositoryDetailsModel{
   int? stars;
   int? watchers;
   int? forks;
+  String? htmlUrl;
 
-  RepositoryDetailsModel({this.name, this.id, this.stars, this.watchers, this.forks, this.fullName});
+  RepositoryDetailsModel({this.name, this.id, this.stars, this.watchers, this.forks, this.fullName, this.htmlUrl});
 
   factory RepositoryDetailsModel.fromJson(Map<String, dynamic> json){
    return RepositoryDetailsModel(
@@ -27,6 +28,7 @@ class RepositoryDetailsModel{
       stars: json['stargazers_count']??'-',
       watchers: json['watchers']??'-',
       forks: json['forks']??'-',
+      htmlUrl: json['html_url']??'-'
     );
   }
 
